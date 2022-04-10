@@ -13,20 +13,35 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-
     <section class="section-center">
+      <p class="alert"></p>
+      <form class="grocery-form">
+        <h3>Grocery Bud</h3>
+        <div class="form-control">
+          <input type="text" placeholder="eg eggs" id="grocery" />
+          <button class="submit-btn" type="submit">Submit</button>
+        </div>
+      </form>
 
-        <p class="alert"></p>
-        <form  class="grocery-form">
-            <div class="form-control">
-                <h3>Grocery Bud</h3>
-                <input type="text" class="grocery" placeholder="eg eggs" id="grocery">
-                <button class="submit-btn"  type="submit" >Submit</button>
+      <div class="grocery-container">
+        <div class="grocery-list">
+          <article class="grocery-item">
+            <p class="title">Eggs</p>
+            <div class="btn-container">
+              <button class="edit-btn" type="button">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="delete-btn" type="button">
+                <i class="fas fa-trash"></i>
+              </button>
             </div>
-        </form>
+          </article>
+        </div>
 
+        <button class="clear-btn" type="button">Clear items</button>
+      </div>
     </section>
     <!-- javascript -->
-    <script src="app.js"></script>
+    <script src="App.js"></script>
   </body>
 </html>
