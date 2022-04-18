@@ -35,7 +35,38 @@ function addItem(e){
     // !true == false 
     if(value && !editFlag)
     {
-        
+        const art = document.createElement('article');
+        art.classList.add('grocery-item');
+
+        const ele = document.createAttribute("data-id");
+        ele.value=id;
+        art.setAttributeNode(ele);
+        art.innerHTML = `<p class="title">${value}</p>
+        <div class="btn-container">
+          <button class="edit-btn" type="button">
+            <i class="fas fa-edit"></i>
+          </button>
+          <button class="delete-btn" type="button">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>`;
+
+        list.appendChild(art);
+
+        //dispally alery
+
+        displayAlert('item added to the list' , 'success');
+
+        //show container 
+
+        container.classList.add('show-container');
+
+        // add to local storage 
+        addToLocalStorage(id,value);
+
+        //set back to default
+
+        setBackToDefault();
     }
     else if(value && editFlag)
     {
@@ -59,4 +90,17 @@ function displayAlert(text,action)
         alert.textContent = "";
         alert.classList.remove(`alert-${action}`);
     } , 2000);
+}
+
+// set back to default 
+function setBackToDefault()
+{
+
+}
+
+// local storage 
+
+function addToLocalStorage(id,value)
+{
+
 }
