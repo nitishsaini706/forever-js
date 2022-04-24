@@ -10,6 +10,15 @@ app.get('/r/:name', (req,res) => {
      res.send(`<h1>How to add params ${name} from url to response from server</h1>`);
 })
 
+// to search using querry string 
+
+app.get('/search' , (req,res)=> {
+    const {q} = req.query;
+    if(!q) {
+        res.send('<h2>NO querry found</h2>');
+    }
+    res.send(`<h1>Found this result ${q}</h1>`);
+})
 
 app.get('*',(req,res) => {
     res.send('<h1>Express js working<h1>');
