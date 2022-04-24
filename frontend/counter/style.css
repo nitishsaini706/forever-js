@@ -1,0 +1,43 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+main{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    place-items: center;
+}
+
+.container{
+    margin: 30vh 0 1rem 0;
+    text-align: center;
+}
+
+#value{
+    margin: 10px 0 50px 0;
+    font-size:5rem;
+}
+
+h2{
+    font-size:3rem;
+}
+
+button{
+    margin:0 1rem 0 1rem;
+    font-size: large;
+    padding:1rem;
+    border: 2px black solid;
+    border-radius: 12px;
+}
+
+
+button:hover{
+    transition: all ease 0.5s;
+
+    background-color: black;
+    color: white;
+    transform: scale(0.9);
+
+}
