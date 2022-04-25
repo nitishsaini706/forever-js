@@ -14,6 +14,17 @@ app.set('views',path.join(__dirname,'/views'));
 app.get('/',(req,res) => {
     res.render('home.ejs');
 })
+//using loops in ejs 
+
+app.get('/cats' , (req,res) => {
+    const cats = {harman ,shivansh , vaidant , piyush , kp}
+    res.render('cats', {cats});
+})
+
+app.get('/r/:subredit' , (req,res) => {
+    const {subredit} = req.params;
+    res.render('redit',{subredit});
+})
 
 app.listen(port , (req,res) => {
     console.log("lIstening");
