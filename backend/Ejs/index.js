@@ -4,6 +4,8 @@ const app = express();
 const port = 3000;
 const reditData = require('./data.json');
 
+// we can use partials and include files which are repeating 
+
 app.set('view engine','ejs');
 
 // this wont work if we are in diff director than views so for that we use path module 
@@ -21,6 +23,13 @@ app.get('/cats' , (req,res) => {
     const cats = ['harman' ,'shivansh' , 'vaidant' , 'piyush' , 'kp'];
     res.render('cats', {cats});
 })
+
+// to use js , css files we need to use static which rendersall files inside public folder
+// to use it in all directoris we need to join path 
+// app.use(express.static('public'));
+app.use(express.static(path.join(__dirname,'/public')));
+
+
 
 app.get('/r/:subredit' , (req,res) => {
     const {subredit} = req.params;
