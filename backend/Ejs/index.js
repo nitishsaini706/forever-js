@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const port = 3000;
+const reditData = require('./data.json');
 
 app.set('view engine','ejs');
 
@@ -17,13 +18,20 @@ app.get('/',(req,res) => {
 //using loops in ejs 
 
 app.get('/cats' , (req,res) => {
-    const cats = {harman ,shivansh , vaidant , piyush , kp}
+    const cats = ['harman' ,'shivansh' , 'vaidant' , 'piyush' , 'kp'];
     res.render('cats', {cats});
 })
 
 app.get('/r/:subredit' , (req,res) => {
     const {subredit} = req.params;
-    res.render('redit',{subredit});
+    const data = reditData[subredit];
+    if(data)
+    {
+        res.render('redit',{ ...data });
+    }
+    else{
+        res.render('error',{subredit})
+    }
 })
 
 app.listen(port , (req,res) => {
