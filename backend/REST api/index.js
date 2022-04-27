@@ -7,7 +7,7 @@ uuid();
 app.use(methodOverride('_method'))
 
 
-const comments = [
+let comments = [
 
     {
         id:uuid(),
@@ -48,8 +48,8 @@ app.get('/comments/new' ,(req,res)=> {
 
 //usig post method 
 app.post('/comments' , (req,res)=>{
-    const { urn, cmt ,id } = req.body;
-    comments.push({ urn, cmt , id:uuid()});
+    const { username, comment ,id } = req.body;
+    comments.push({ username, comment , id:uuid()});
     res.redirect("/comments");
 })
 
@@ -79,7 +79,12 @@ app.get("/comments/:id/edit" , (req,res)=>{
     res.render('comments/edit' , {cmt});
 })
 
-
+//deleting comment 
+app.delete('/comments/:id' ,(req,res)=>{
+    const {id} = req.params;
+    comments = comments.filter(c => c.id !== id);
+    res.redirect('/comments');
+})
 
 app.listen(3000, (req, res) => {
     console.log('listening');
