@@ -20,7 +20,7 @@ const comments = [
 
 
 //to accept form data from url 
-app.use(express.urlencoded({ extended: true }))
+app.use(express.urlencoded({extended:true}));
 
 // to accept form data in json format from server
 app.use(express.json());

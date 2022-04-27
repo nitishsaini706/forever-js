@@ -12,8 +12,10 @@
     <ul>
 
         <%   for (let c of comments) { %>
-            <li> <%=   c.comment %>  -<b> <%=   c.username %> </b></li>
+            <li> <%=c.comment%>  -<b> <%=c.username%> </b></li>
         <%   } %>
     </ul>
+
+    <a href="/comments/new">Add new comment</a>
 </body>
 </html>
