@@ -17,6 +17,17 @@ personSchema.virtual('fulName').get(function(){
     return `${this.first} ${this.last}`
 })
 
+//using middelwares
+//this will run pre save
+personSchema.pre('save',async function () {
+    console.log('ABOUT TO SAVE!!!!');
+}) 
+
+// this will run post save
+personSchema.post('save',async function(){
+    console.log("SAVED");
+})
+
 const person = mongoose.model('person',personSchema);
 const nitish = new person({first:"nitish",last:"saini"});
 nitish.save();
