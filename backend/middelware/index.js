@@ -25,6 +25,7 @@ app.get('/dog',(req,res)=>{
 
 
 // this will run if not route if found , used for 404 error 
+// this comes at very end of file
 app.use((req,res)=>{
     res.status(404).send("NOt Found")
 })
