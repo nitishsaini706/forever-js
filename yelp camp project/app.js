@@ -39,7 +39,7 @@ app.get('/camground/new' , (req,res)=>{
 
 app.get('/campground/:id' , async(req,res)=>{
     const {id} = req.params;
-    const camp = await campground.findOne({id});
+    const camp = await campground.findById(id);
     res.render('campground/show',{camp});
 })
 

@@ -10,7 +10,7 @@
     <h1>Edit campground</h1>
 
     <div>
-      <form action="/campground/<%=camp.id%>?_method=PUT" method="POST">
+      <form action="/campground/<%=camp._id%>?_method=PUT" method="POST">
         <section>
           <label for="title">title</label>
           <input type="text" id="title" name="campground[title]" value="<%= camp.title %> "/>
