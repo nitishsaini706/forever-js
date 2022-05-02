@@ -9,6 +9,12 @@ app.use((req,res,next)=>{
     next();
 })
 
+// we can also set middleware for a specific route
+app.use('/dog',(req,res,next)=>{
+    console.log("we are under dogs");
+    next();
+})
+
 app.get('/',(req,res)=>{
     res.send('Home page');
 })
@@ -16,6 +22,8 @@ app.get('/',(req,res)=>{
 app.get('/dog',(req,res)=>{
     res.send("WOOF WOOF !!!!");
 })
+
+
 
 app.listen(3000,()=>{
     console.log("App running on port 3000");
