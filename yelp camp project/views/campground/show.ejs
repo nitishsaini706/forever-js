@@ -1,14 +1,24 @@
 <% layout('./layout/boilerplate') -%> 
 
-    
-    <h1><%= camp.title %> </h1>
-    <p><%= camp.location %> </p>
-    <img src="<%= camp.image %> " alt="">
-    <p>Desctipriton - <%= camp.description %> </p>
-    <p>Price - <%= camp.price %> </p>
-    <a href="/campground/<%= camp._id %>/edit">Edit campground</a>
-    <a href="/campground">Go back to index</a>
+<div class="row ">
+    <div class="col-6 offset-3">
+    <div class="card mt-3 mb-3" style="width: 20rem;">
+        <img src="<%= camp.image %> " class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title"><%= camp.title %></h5>
+          <p class="card-text">Desctipriton - <%= camp.description %> </p>
+          <p class="card-text"><%= camp.location %></p>
+          <p class="card-text">Price - <%= camp.price %></p>
+          <form class="d-inline" action="/campground/<%= camp._id %>?_method=DELETE " method="POST">
+            <a class="btn btn-warning"href="/campground/<%= camp._id %>/edit">Edit campground</a>
+            <button class="btn btn-danger">Delete</button>
+        </form>
 
-    <form action="/campground/<%= camp._id %>?_method=DELETE " method="POST">
-        <button>delete</button>
-    </form>
+            <a class="btn btn-info"href="/campground">Go back to index</a>
+        </div>
+      </div>
+    </div>
+</div>
+    
+
+    
