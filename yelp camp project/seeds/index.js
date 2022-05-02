@@ -26,7 +26,7 @@ const seedDb = async () => {
             {
                 location: `${cities[random1000].city},${cities[random1000].state}`,
                 title: `${descriptors[sample(descriptors)]} ${places[sample(places)]}`,
-                image: 'https://unsplash.com/collections/483251/in-the-woods',
+                image: 'https://images.unsplash.com/photo-1437205695086-b44352699f59?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHw0ODQzNTF8fHx8fHx8MTY1MTQ2NTUwMw&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=200&h=200',
                 description: ' Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aspernatur officiis eos ipsam commodi, quaerat, quam provident temporibus cum eaque ea sit optio sequi laboriosam. Minus cumque qui iure repudiandae aliquam.',
                 price
             }

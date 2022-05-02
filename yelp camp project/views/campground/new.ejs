@@ -1,16 +1,51 @@
-<% layout('./layout/boilerplate') -%> 
-<h1>Creating new campground</h1>
+<% layout('./layout/boilerplate') -%>
+<div class="row">
+  <h1 class="text-center">New Campground</h1>
+  <div class="col-6 offset-3">
+    <div class="mb-3">
+      <form action="/campground" method="POST">
+        <div class="mb-3">
+          <label class="form-label" for="title">title</label>
+          <input
+            class="form-control"
+            type="text"
+            id="title"
+            name="campground[title]"
+          />
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="image">Image- Url</label>
+          <input
+            class="form-control"
+            type="text"
+            id="image"
+            name="campground[image]"
+          />
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="location">location</label>
+          <input
+            class="form-control"
+            type="text"
+            id="location"
+            name="campground[location]"
+          />
+        </div>
+        <div class="input-group mb-3">
+          <span class="input-group-text">$</span>
+          <input type="text" id="price" class="form-control" placeholder="0.00"
+          aria-label="price" name="camground[price]">
+        </div>
 
-<div>
-  <form action="/campground" method="POST">
-    <section>
-      <label for="title">title</label>
-      <input type="text" id="title" name="campground[title]" />
-    </section>
-    <section>
-      <label for="location">location</label>
-      <input type="text" id="location" name="campground[location]" />
-    </section>
-    <button>Add CampGround</button>
-  </form>
+        <div class="input-group">
+          <span class="input-group-text">Description</span>
+          <textarea class="form-control" id="description" name="camground[description]" aria-label="description"></textarea>
+        </div>
+        <div class="mb-3 mt-3">
+          <button class="btn btn-success">Add CampGround</button>
+          <a class="btn btn-primary" href="/campground">Index</a>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>

@@ -34,7 +34,7 @@ app.get('/campground', async(req,res)=>{
     res.render('campground/index',{camp});
 })
 
-app.get('/camground/new' , (req,res)=>{
+app.get('/campground/new' , (req,res)=>{
     res.render('campground/new');
 })
 
