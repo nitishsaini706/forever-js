@@ -24,6 +24,10 @@ app.get('/dog',(req,res)=>{
 })
 
 
+// this will run if not route if found , used for 404 error 
+app.use((req,res)=>{
+    res.status(404).send("NOt Found")
+})
 
 app.listen(3000,()=>{
     console.log("App running on port 3000");
