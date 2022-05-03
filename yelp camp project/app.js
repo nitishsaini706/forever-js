@@ -80,7 +80,9 @@ app.all('*',(req,res,next)=>{
 
 app.use((err,req,res,next)=>{
     const {message='Something went wrong' , status=500} = err;
-    res.status(status).send(message);
+    // res.status(status).send(message);
+    //we are rendering error page instead of sending to browser
+    res.status(status).render('error',{err});
 })
 
 app.listen(3000,()=>{
