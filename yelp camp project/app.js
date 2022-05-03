@@ -60,8 +60,9 @@ app.get('/campground/:id/edit',async (req,res)=>{
 
 app.put('/campground/:id',async(req,res)=>{
     const {id} = req.params;
+    
     await campground.findByIdAndUpdate(id,{...req.body.campground});
-    res.redirect(`/campground/${campground.id}`);
+    res.redirect(`/campground`);
 })
 
 app.delete('/campground/:id' , async(req,res)=>{

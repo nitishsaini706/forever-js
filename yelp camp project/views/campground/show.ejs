@@ -6,7 +6,7 @@
         <img src="<%= camp.image %> " class="card-img-top" alt="...">
         <div class="card-body">
           <h5 class="card-title"><%= camp.title %></h5>
-          <p class="card-text">Desctipriton - <%= camp.description %> </p>
+          <p class="card-text">Descriprtion - <%= camp.description %> </p>
           <p class="card-text"><%= camp.location %></p>
           <p class="card-text">Price - <%= camp.price %></p>
           <form class="d-inline" action="/campground/<%= camp._id %>?_method=DELETE " method="POST">

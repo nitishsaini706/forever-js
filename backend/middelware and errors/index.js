@@ -21,6 +21,7 @@ app.get('/',(req,res)=>{
 
 app.get('/dog',(req,res)=>{
     res.send("WOOF WOOF !!!!");
+    throw console.error("NOt found");
 })
 
 
@@ -28,6 +29,15 @@ app.get('/dog',(req,res)=>{
 // this comes at very end of file
 app.use((req,res)=>{
     res.status(404).send("NOt Found")
+})
+
+//error handling has 4 paramters in this middelware
+// this is custom defined error 
+app.use((err,req,res,next)=>{
+    console.log('******ERROR******');
+
+    //if we want to use built in error handler we pass err in next()
+    next(err);
 })
 
 app.listen(3000,()=>{
