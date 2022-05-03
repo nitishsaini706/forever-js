@@ -57,6 +57,20 @@ app.use((err,req,res,next)=>{
     res.status(error).send(message);
 })
 
+
+// handling async error 
+app.get('/data', async(req,res,err)=>{
+
+    const product = await Products.findById(id);
+    if(!product)
+    {
+        // to show error we need to use next as it will send the error to middleware 
+        return next(new appError('not found',404));
+    }
+    //if return is not used this line will execute after showing error
+    res.render('/products');
+})
+
 app.listen(3000,()=>{
     console.log("App running on port 3000");
 })
