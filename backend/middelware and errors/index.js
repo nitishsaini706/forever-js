@@ -57,20 +57,26 @@ app.use((err,req,res,next)=>{
     res.status(error).send(message);
 })
 
-
+// 3. creating aysnc utility function to avoid writing try and catch all the time 
+function handleAsync(fn){
+    return function(req,res,next) {
+        fn(req,res,next).catch(e => next(e));
+    }
+}
 // handling async error 
-app.get('/data', async(req,res,err)=>{
+// 4. we need to use utility function like this
+app.get('/data', handleAsync(async(req,res,err)=>{
 
     const product = await Products.findById(id);
     if(!product)
     {
-        // to show error we need to use next as it will send the error to middleware 
+        // 1. to show error we need to use next as it will send the error to middleware 
         return next(new appError('not found',404));
     }
     //if return is not used this line will execute after showing error
     res.render('/products');
-    // we use try catch to get any mongoose error then we need throw instead of return and next , wich willl send error
-})
+    // 2. we use try catch to get any mongoose error then we need throw instead of return and next , wich willl send error
+}))
 
 // we also use try and catch in asycn await
 
