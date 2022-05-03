@@ -4,7 +4,9 @@ const ejsMate = require('ejs-mate');
 const path = require('path');
 const mongoose = require('mongoose');
 const campground = require('./model/campground');
-var methodOverride = require('method-override')
+const methodOverride = require('method-override');
+const handleAsync = require('./utils/handleAsync');
+const AppError = require('./utils/AppError');
 
 
 main().catch(err => {console.log(err)})
@@ -29,9 +31,7 @@ app.get('/',(req,res)=>{
     res.render('home');
 })
 
-function handleAsync(fn){
-    return fn(req,res,next).catch(e=> next(e));
-}
+
 app.get('/campground', handleAsync(async(req,res)=>{
     const camp =  await campground.find({});
     res.render('campground/index',{camp});
@@ -74,8 +74,13 @@ app.delete('/campground/:id' , handleAsync(async(req,res)=>{
     res.redirect('/campground');
 }))
 
+app.all('*',(req,res,next)=>{
+    next(new AppError('Page not found',404));
+})
+
 app.use((err,req,res,next)=>{
-    res.send('oh boy!!!!');
+    const {message='Something went wrong' , status=500} = err;
+    res.status(status).send(message);
 })
 
 app.listen(3000,()=>{
