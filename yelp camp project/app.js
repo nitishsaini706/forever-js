@@ -29,46 +29,53 @@ app.get('/',(req,res)=>{
     res.render('home');
 })
 
-app.get('/campground', async(req,res)=>{
+function handleAsync(fn){
+    return fn(req,res,next).catch(e=> next(e));
+}
+app.get('/campground', handleAsync(async(req,res)=>{
     const camp =  await campground.find({});
     res.render('campground/index',{camp});
-})
+}))
 
 app.get('/campground/new' , (req,res)=>{
     res.render('campground/new');
 })
 
-app.get('/campground/:id' , async(req,res)=>{
+app.get('/campground/:id' , handleAsync(async(req,res)=>{
     const {id} = req.params;
     const camp = await campground.findById(id);
     res.render('campground/show',{camp});
-})
+}))
 
-app.post('/campground' , async(req,res)=>{
+app.post('/campground' , handleAsync(async(req,res)=>{
     
     const Campground = new campground(req.body.campground);
     await Campground.save();
     res.redirect(`/campground`);
-})
+}))
 
-app.get('/campground/:id/edit',async (req,res)=>{
+app.get('/campground/:id/edit',handleAsync(async (req,res)=>{
     const {id} = req.params;
     const camp = await campground.findById(id);
     // console.log(campg);
     res.render('campground/edit' ,{camp});
-})
+}))
 
-app.put('/campground/:id',async(req,res)=>{
+app.put('/campground/:id',handleAsync(async(req,res)=>{
     const {id} = req.params;
     
     await campground.findByIdAndUpdate(id,{...req.body.campground});
     res.redirect(`/campground`);
-})
+}))
 
-app.delete('/campground/:id' , async(req,res)=>{
+app.delete('/campground/:id' , handleAsync(async(req,res)=>{
     const {id} = req.params;
     await campground.findByIdAndDelete(id);
     res.redirect('/campground');
+}))
+
+app.use((err,req,res,next)=>{
+    res.send('oh boy!!!!');
 })
 
 app.listen(3000,()=>{
