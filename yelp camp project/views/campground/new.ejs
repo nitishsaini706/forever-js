@@ -3,7 +3,7 @@
   <h1 class="text-center">New Campground</h1>
   <div class="col-6 offset-3">
     <div class="mb-3">
-      <form action="/campground" method="POST">
+      <form action="/campground" method="POST" novalidate class="validated-form">
         <div class="mb-3">
           <label class="form-label" for="title">title</label>
           <input
@@ -11,7 +11,11 @@
             type="text"
             id="title"
             name="campground[title]"
+            required
           />
+          <div class="valid-feedback">
+            Looks good!
+          </div>
         </div>
         <div class="mb-3">
           <label class="form-label" for="image">Image- Url</label>
@@ -19,8 +23,11 @@
             class="form-control"
             type="text"
             id="image"
-            name="campground[image]"
+            name="campground[image]" required
           />
+          <div class="valid-feedback">
+        Looks good!
+      </div>
         </div>
         <div class="mb-3">
           <label class="form-label" for="location">location</label>
@@ -28,18 +35,27 @@
             class="form-control"
             type="text"
             id="location"
-            name="campground[location]"
+            name="campground[location]" required
           />
+          <div class="valid-feedback">
+        Looks good!
+      </div>
         </div>
         <div class="input-group mb-3">
           <span class="input-group-text">$</span>
           <input type="text" id="price" class="form-control" placeholder="0.00"
-          aria-label="price" name="campground[price]">
+          aria-label="price" name="campground[price]" required>
+          <div class="valid-feedback">
+        Looks good!
+      </div>
         </div>
 
         <div class="input-group">
           <span class="input-group-text">Description</span>
-          <input type="text" class="form-control" id="description" name="campground[description]" aria-label="description">
+          <input type="text" class="form-control" id="description" name="campground[description]" aria-label="description" required>
+          <div class="valid-feedback">
+        Looks good!
+      </div>
         </div>
         <div class="mb-3 mt-3">
           <button class="btn btn-success">Add CampGround</button>
