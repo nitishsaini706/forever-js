@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
 const morgan = require('morgan');
+const appError = require('./AppError');
+
 
 app.use(morgan('tiny'));
 //how to use middleware 
@@ -19,9 +21,14 @@ app.get('/',(req,res)=>{
     res.send('Home page');
 })
 
+app.get('/admin' ,(req,res)=>{
+
+    throw new appError('password required',401);
+
+})
+
 app.get('/dog',(req,res)=>{
     res.send("WOOF WOOF !!!!");
-    throw console.error("NOt found");
 })
 
 
@@ -38,6 +45,16 @@ app.use((err,req,res,next)=>{
 
     //if we want to use built in error handler we pass err in next()
     next(err);
+})
+
+//we can also define errors like this
+
+app.use((err,req,res,next)=>{
+    // const {error = 500} = err.status;
+    // const {message = "Something went wrong"} = err.message;
+
+    const {error = 500 , message = "Something went wrond"} = err; //this is used to set default values
+    res.status(error).send(message);
 })
 
 app.listen(3000,()=>{
