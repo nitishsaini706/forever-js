@@ -69,7 +69,18 @@ app.get('/data', async(req,res,err)=>{
     }
     //if return is not used this line will execute after showing error
     res.render('/products');
+    // we use try catch to get any mongoose error then we need throw instead of return and next , wich willl send error
 })
+
+// we also use try and catch in asycn await
+
+try{
+
+}catch(e) {  
+    // this will send error to our defined error code and will send error message to display it on browser
+    next(e);
+}
+
 
 app.listen(3000,()=>{
     console.log("App running on port 3000");
