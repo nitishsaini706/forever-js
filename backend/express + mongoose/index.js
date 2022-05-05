@@ -28,11 +28,22 @@ app.get('/farm',async (req,res)=>{
     res.render('farms/index',{farms})
 })
 
+
+
 app.get('/farm/new' ,(req,res)=>{
     res.render('farms/new');
 })
 
-
+app.get('/farm/:id' , async(req,res)=>{
+    const f = await farm.findById(req.params.id);
+    res.render('farms/show',{f})
+})
+app.post('/farm' , async(req,res)=>{
+    // res.send(req.body);
+    const fa = new farm(req.body);
+    await fa.save()
+    res.redirect('/farm')
+})
 
 
 ///products model
