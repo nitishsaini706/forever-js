@@ -6,6 +6,7 @@ const Product = require('./models/product');
 const methodOverride = require('method-override');
 const farm = require('./models/farm');
 
+const category = ['fruit','dairy' ,'vegetables']
 //setting mongoose 
 main().catch(err => console.log(err));
 
@@ -94,6 +95,23 @@ app.delete('/products/:id' , async(req,res)=>{
     res.redirect('/products');
 })
 
+// attaching farms and product
+
+app.get('/farm/:id/product/new' , (req,res)=>{
+    const {id} = req.params;
+    res.render('products/new' , {category , id})
+})
+
+app.post('/farm/:id/product' , async(req,res)=>{
+    const {name , category,price} = req.body;
+    const far = await farm.findById(req.params.id);
+    const pro = new Product({name,category,price});
+    far.product.push(pro);
+    pro.farm = far;
+    await pro.save();
+    await far.save();
+    res.send(far)
+})
 
 app.listen(3000,()=>{
     console.log("App listening on port 3000!!!");
