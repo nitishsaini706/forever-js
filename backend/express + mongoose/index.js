@@ -4,6 +4,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 const Product = require('./models/product');
 const methodOverride = require('method-override');
+const farm = require('./models/farm');
 
 //setting mongoose 
 main().catch(err => console.log(err));
@@ -19,7 +20,22 @@ app.set('view engine','ejs');
 //middleWares
 app.use(express.urlencoded({extended:true}));
 app.use(methodOverride('_method'));
+ 
+//farms 
 
+app.get('/farm',async (req,res)=>{
+    const farms= await farm.find({})
+    res.render('farms/index',{farms})
+})
+
+app.get('/farm/new' ,(req,res)=>{
+    res.render('farms/new');
+})
+
+
+
+
+///products model
 //creating products page
 app.get('/products', async (req,res)=>{
     const products = await Product.find({});
