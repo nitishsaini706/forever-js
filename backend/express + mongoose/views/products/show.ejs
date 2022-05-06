@@ -11,8 +11,11 @@
     <ul>
       <li>Price : <%= product.price %></li>
       <li>Category : <%= product.category %></li>
+      <li>farm : <a href="/farm/<%= product.farm.id %> "><%= product.farm.name %> </a></li>
     </ul>
+    
     <p><a href="/products"> Go back to all products</a></p>
+    <br>
     <a href="/products/<%= product.id %>/edit ">Edit product</a>
     <form action="/products/<%= product.id %>?_method=DELETE" method="POST">
       <button>Delete</button>

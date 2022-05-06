@@ -31,20 +31,17 @@ app.get('/farm',async (req,res)=>{
 
 
 
-app.get('/farm/new' ,(req,res)=>{
-    res.render('farms/new');
-})
 
-app.get('/farm/:id' , async(req,res)=>{
-    const f = await farm.findById(req.params.id);
-    res.render('farms/show',{f})
-})
 app.post('/farm' , async(req,res)=>{
     // res.send(req.body);
     const fa = new farm(req.body);
     await fa.save()
     res.redirect('/farm')
 })
+app.get('/farm/new' ,(req,res)=>{
+    res.render('farms/new');
+})
+
 
 
 ///products model
@@ -62,7 +59,7 @@ app.get('/products/new' ,(req,res)=>{
 
 app.get('/products/:id' , async (req,res)=>{
     const {id} = req.params;
-    const product = await Product.findById(id);
+    const product = await Product.findById(id).populate('farm');
     res.render('products/show' , {product});
 
 })
@@ -97,6 +94,12 @@ app.delete('/products/:id' , async(req,res)=>{
 
 // attaching farms and product
 
+app.get('/farm/:id' , async(req,res)=>{
+    const {id} = req.params;
+    const f = await farm.findById(id).populate('products');
+    res.render('farms/show',{f})
+})
+
 app.get('/farm/:id/product/new' , (req,res)=>{
     const {id} = req.params;
     res.render('products/new' , {category , id})
@@ -106,12 +109,18 @@ app.post('/farm/:id/product' , async(req,res)=>{
     const {name , category,price} = req.body;
     const far = await farm.findById(req.params.id);
     const pro = new Product({name,category,price});
-    far.product.push(pro);
+    far.products.push(pro);
     pro.farm = far;
     await pro.save();
     await far.save();
-    res.send(far)
+    res.redirect(`/farm/${far.id}`)
 })
+
+app.delete('/farm/:id' ,async (req,res)=>{
+    // console.log(req.params.id)
+    const f = await farm.findByIdAndDelete(req.params.id);
+    res.redirect('/farm')
+}) 
 
 app.listen(3000,()=>{
     console.log("App listening on port 3000!!!");

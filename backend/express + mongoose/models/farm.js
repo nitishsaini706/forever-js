@@ -19,17 +19,24 @@ const farmSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    product : [
-        {
-            type: mongoose.Schema.Types.ObjectId ,
-            ref:product
-        }
+    products: [{
         
-    ]
+            type: mongoose.Schema.Types.ObjectId ,
+            ref: 'product'
+    }]
         
     
 })
 
+farmSchema.post('findOneAndDelete' , async function(farm)
+{
+    console.log(farm)
+    // if(farm.products.length)
+    // {
+    //     const pro = await product.deleteMany( {_id : {$in : farm.products }} )
+    //     console.log(pro)
+    // }
+})
 
 const farm = mongoose.model('farm',farmSchema);
 
