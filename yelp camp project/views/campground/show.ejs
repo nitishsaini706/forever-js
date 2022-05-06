@@ -1,24 +1,75 @@
-<% layout('./layout/boilerplate') -%> 
+<% layout('./layout/boilerplate') -%>
 
-<div class="row ">
-    <div class="col-6 offset-3">
-    <div class="card mt-3 mb-3" style="width: 20rem;">
-        <img src="<%= camp.image %> " class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title"><%= camp.title %></h5>
-          <p class="card-text">Descriprtion - <%= camp.description %> </p>
-          <p class="card-text"><%= camp.location %></p>
-          <p class="card-text">Price - <%= camp.price %></p>
-          <form class="d-inline" action="/campground/<%= camp._id %>?_method=DELETE " method="POST">
-            <a class="btn btn-warning"href="/campground/<%= camp._id %>/edit">Edit campground</a>
-            <button class="btn btn-danger">Delete</button>
+<div class="row">
+  <div class="col-6 offset-3">
+    <div class="card mt-3 mb-3" style="width: 30vw">
+      <img src="<%= camp.image %> " class="card-img-top" alt="..." />
+      <div class="card-body">
+        <h5 class="card-title"><%= camp.title %></h5>
+        <p class="card-text">Descriprtion - <%= camp.description %></p>
+        <p class="card-text"><%= camp.location %></p>
+        <p class="card-text">Price - <%= camp.price %></p>
+        <form
+          class="d-inline"
+          action="/campground/<%= camp._id %>?_method=DELETE "
+          method="POST"
+        >
+          <a class="btn btn-warning" href="/campground/<%= camp._id %>/edit"
+            >Edit campground</a
+          >
+          <button class="btn btn-danger">Delete</button>
         </form>
 
-            <a class="btn btn-info"href="/campground">Go back to index</a>
-        </div>
+        <a class="btn btn-info" href="/campground">Go back to index</a>
       </div>
     </div>
+  </div>
 </div>
-    
 
-    
+<div class="row">
+  <div class="col-6 offset-3">
+    <h2>Leave a Review</h2>
+    <div class="card mt-3 mb-3" style="width: 30vw">
+      <form action="/campground/<%= camp._id %>/review" method="POST" novalidate class="validated-form">
+        <div class="mb-3 p-3">
+          <label for="Rating" class="form-label">Rating</label>
+          <input
+            type="range"
+            min="1"
+            max="5"
+            class="form-range"
+            id="Rating"
+            name="review[rating]"
+          />
+        </div>
+        <div class="mb-3 p-3">
+          <label for="review" class="form-label">Review</label>
+          <textarea
+            class="form-control"
+            id="review"
+            rows="3"
+            name="review[body]" required
+          ></textarea>
+          <div class="valid-feedback">
+            Looks good!
+          </div>
+          <button class="btn btn-success mt-2">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-6 offset-3">
+    <h2>Reviews</h2>
+    <div class="card mt-3 mb-3" style="width: 30vw">
+    <% for(let review of camp.reviews){ %>
+      <div class="mb-3 p-3">
+        <p>Rating : <%= review.rating %> </p>
+        <p>Review : <%= review.body %> </p>
+
+      </div>
+      <% } %>  
+    </div>
+</div>
