@@ -1,13 +1,20 @@
 const express = require('express');
 const app = express();
+const cookies = require('cookie-parser');
 const shelterRouter = require('./routes/shelter');
 const adminRouter = require('./routes/admin');
 
 
 // app.use('/shelter',shelterRouter);
 // app.use('/admin',adminRouter);
+app.use(cookies());
 
-//using cookies
+//fetching cookies 
+app.get('/greet',(req,res)=>{
+    const {name} = req.cookies;
+    res.send(`Hey there , ${name}`)
+})
+//creating cookies
 
 app.get('/name',(req,res)=>{
     res.cookie('name','nitish');
