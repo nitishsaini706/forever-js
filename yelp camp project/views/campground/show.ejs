@@ -1,9 +1,9 @@
 <% layout('./layout/boilerplate') -%>
 
 <div class="row">
-  <div class="col-6 offset-3">
+  <div class="col-6 ">
     <div class="card mt-3 mb-3" style="width: 30vw">
-      <img src="<%= camp.image %> " class="card-img-top" alt="..." />
+      <img src="<%= camp.image %> " class="card-img-top" style="height:50vh" alt="..." />
       <div class="card-body">
         <h5 class="card-title"><%= camp.title %></h5>
         <p class="card-text">Descriprtion - <%= camp.description %></p>
@@ -24,13 +24,15 @@
       </div>
     </div>
   </div>
-</div>
-
-<div class="row">
-  <div class="col-6 offset-3">
+  <div class="col-6">
     <h2>Leave a Review</h2>
     <div class="card mt-3 mb-3" style="width: 30vw">
-      <form action="/campground/<%= camp._id %>/review" method="POST" novalidate class="validated-form">
+      <form
+        action="/campground/<%= camp._id %>/review"
+        method="POST"
+        novalidate
+        class="validated-form"
+      >
         <div class="mb-3 p-3">
           <label for="Rating" class="form-label">Rating</label>
           <input
@@ -48,28 +50,26 @@
             class="form-control"
             id="review"
             rows="3"
-            name="review[body]" required
+            name="review[body]"
+            required
           ></textarea>
-          <div class="valid-feedback">
-            Looks good!
-          </div>
+          <div class="valid-feedback">Looks good!</div>
           <button class="btn btn-success mt-2">Submit</button>
         </div>
       </form>
     </div>
-  </div>
-</div>
 
-<div class="row">
-  <div class="col-6 offset-3">
     <h2>Reviews</h2>
     <div class="card mt-3 mb-3" style="width: 30vw">
-    <% for(let review of camp.reviews){ %>
+      <% for(let review of camp.reviews){ %>
       <div class="mb-3 p-3">
-        <p>Rating : <%= review.rating %> </p>
-        <p>Review : <%= review.body %> </p>
-
+        <p>Rating : <%= review.rating %></p>
+        <p>Review : <%= review.body %></p>
+        <form action="/campground/<%= camp.id %>/review/<%= review.id %>?_method=DELETE  " method="POST">
+          <button class="btn btn-sm btn-danger">Delete</button>
+        </form>
       </div>
-      <% } %>  
+      <% } %>
     </div>
+  </div>
 </div>
