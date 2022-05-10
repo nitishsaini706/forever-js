@@ -38,4 +38,4 @@ router.delete('/:reviewId' , handleAsync(async (req,res)=>{
     res.redirect(`/campground/${camp.id}`);
 }))
 
-module.exports = router ;
+module.exports = router;
