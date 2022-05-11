@@ -19,6 +19,15 @@ app.set('views','views');
 app.use(express.urlencoded({extended:true}));
 app.use(session({secret:'secret'}));
 
+const requireLogin = (req,res,next) => {
+    if(!req.session.user_id)
+    {
+        return res.redirect('/login');
+    }
+    next();
+
+}
+
 app.get('/',(req,res)=>{
     res.send("working");
 })
@@ -44,7 +53,7 @@ app.get('/login',(req,res)=>{
 app.post('/login',async (req,res)=>{
     const {username , password} = req.body;
     const user = await User.findOne({username});
-    console.log(user);
+    // console.log(user);
     const pass = bcrypt.compare(password , user.password);
     if(pass)
     {
@@ -57,13 +66,14 @@ app.post('/login',async (req,res)=>{
 
 })
 
-app.get('/secret',(req,res)=>{
-    if(!req.session.user_id)
-    {
-        res.send('ONly happen when logged in');
-
-    }
+app.post('/logout' ,(req,res) =>{
+    req.session.user_id = null;
     res.redirect('/login');
+})
+
+app.get('/secret',requireLogin,(req,res)=>{
+    
+    res.render('secret');
 })
 
 app.listen(3000,()=>{
