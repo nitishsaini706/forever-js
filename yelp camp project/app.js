@@ -2,7 +2,9 @@ const express = require('express');
 const app = express();
 const ejsMate = require('ejs-mate');
 const path = require('path');
+const session = require('express-session')
 const mongoose = require('mongoose');
+const flash = require('flash');
 const methodOverride = require('method-override');
 const AppError = require('./utils/AppError');
 const campRouter = require('./routes/campground');
@@ -26,6 +28,27 @@ app.use(express.static(path.join(__dirname,'public')))
 
 app.use(express.urlencoded({extended:true}));
 app.use(methodOverride('_method'));
+
+const sesscionConnfig = {
+    secret: 'secret',
+    resave:false,
+    saveUninitialized:false,
+    cookie : {
+        httpOnly:true,
+        expires : Date.now() + 1000*60*60*24*7 ,
+        maxAge: 1000*60*60*24*7
+
+    }
+}
+
+app.use(session(sesscionConnfig));
+app.use(flash());
+
+app.use((req,res,next)=>{
+    res.locals.success = req.flash('success');
+    res.locals.error = req.flash('error');
+    next();
+})
 
 app.get('/',(req,res)=>{
     res.render('home');

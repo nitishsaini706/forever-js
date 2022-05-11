@@ -34,19 +34,28 @@ router.get('/:id' ,handleAsync(async(req,res)=>{
     const {id} = req.params;
     const camp = await campground.findById(id).populate('reviews');
 
-    res.render('campground/show',{camp});
+    if(!camp){
+        req.flash('error','Campground not present');
+        return res.redirect('/campground');
+    }
+    
+
+        res.render('campground/show',{camp});
+    
 }))
 
 router.post('/' , schema ,handleAsync(async(req,res)=>{
     
     const Campground = new campground(req.body.campground);
     await Campground.save();
-    res.redirect(`/campground`);
+    req.flash( 'success' , 'successfully created campground');
+    res.redirect(`/campground/${Campground.id}`);
 }))
 
 router.get('/:id/edit',handleAsync(async (req,res)=>{
     const {id} = req.params;
     const camp = await campground.findById(id);
+    req.flash('success','Successfully edited the campground');
     res.render('campground/edit' ,{camp});
 }))
 
@@ -60,6 +69,7 @@ router.put('/:id',schema ,handleAsync(async(req,res)=>{
 router.delete('/:id' , handleAsync(async(req,res)=>{
     const {id} = req.params;
     await campground.findByIdAndDelete(id);
+    req.flash('success','Successfully deleted the campground');
     res.redirect('/campground');
 }))
 
