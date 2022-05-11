@@ -22,6 +22,7 @@ app.get('/',(req,res)=>{
     res.send("working");
 })
 
+
 app.get('/register',(req,res)=>{
     res.render("register");
     // res.send("register");
@@ -32,8 +33,27 @@ app.post('/register', async (req,res)=>{
     const hash  = await bcrypt.hash(password , 12);
     const user = new User({username :username , password:hash});
     await user.save();
+    
+    res.redirect('/login');
+})
+app.get('/login',(req,res)=>{
+    res.render('login');
+})
 
-    res.redirect('/');
+app.post('/login',async (req,res)=>{
+    const {username , password} = req.body;
+    const user = await User.findOne({username});
+    console.log(user);
+    const pass = bcrypt.compare(password , user.password);
+    if(pass)
+    {
+        res.send("Welcome , YAY!!!!");
+    }
+    else{
+        res.send("INvalid username or password");
+    }
+
+    // res.send("checking");
 })
 
 app.listen(3000,()=>{
