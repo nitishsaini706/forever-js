@@ -6,6 +6,7 @@ const AppError = require('../utils/AppError');
 const joi = require('joi');
 const {campSchema } = require('../schema/camp');
 const campground = require('../model/campground');
+const flash = require('flash');
 
 
 // joi isused fo server side validation in js not db
@@ -72,5 +73,7 @@ router.delete('/:id' ,isLogged, handleAsync(async(req,res)=>{
     req.flash('success','Successfully deleted the campground');
     res.redirect('/campground');
 }))
+
+
 
 module.exports = router ;

@@ -65,6 +65,11 @@ app.use((req,res,next)=>{
 app.get('/',(req,res)=>{
     res.render('home');
 })
+app.get('/logout' ,(req,res)=>{
+    req.logout();
+    req/flash("success","Goodbye");
+    res.redirect('/campground');
+})
 
 app.use('/' , userRouter);
 app.use('/campground' , campRouter);
