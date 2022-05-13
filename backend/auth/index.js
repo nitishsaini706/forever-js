@@ -40,6 +40,7 @@ app.get('/register',(req,res)=>{
 app.post('/register', async (req,res)=>{
     const {username , password } = req.body;
     const hash  = await bcrypt.hash(password , 12);
+    // we can also hash in mongoose using middleware in mongoose
     const user = new User({username :username , password:hash});
     await user.save();
     req.session.user_id = user.id;
@@ -54,6 +55,9 @@ app.post('/login',async (req,res)=>{
     const {username , password} = req.body;
     const user = await User.findOne({username});
     // console.log(user);
+
+    //we can also do this in schema using statics function 
+    // we pass username and password
     const pass = bcrypt.compare(password , user.password);
     if(pass)
     {

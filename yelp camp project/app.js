@@ -9,6 +9,10 @@ const methodOverride = require('method-override');
 const AppError = require('./utils/AppError');
 const campRouter = require('./routes/campground');
 const reviewRouter = require('./routes/review')
+const userRouter = require('./routes/user');
+const user = require('./model/user');
+const passport = require('passport');
+const localpass = require('passport-local');
 
 main().catch(err => {console.log(err)})
 async function main() {
@@ -44,6 +48,14 @@ const sesscionConnfig = {
 app.use(session(sesscionConnfig));
 app.use(flash());
 
+//passport will always be used after session
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(new localpass(user.authenticate()));
+passport.serializeUser(user.serializeUser());
+passport.deserializeUser(user.deserializeUser());
+
 app.use((req,res,next)=>{
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
@@ -54,7 +66,7 @@ app.get('/',(req,res)=>{
     res.render('home');
 })
 
-
+app.use('/' , userRouter);
 app.use('/campground' , campRouter);
 app.use('/campground/:id/review' , reviewRouter);
 

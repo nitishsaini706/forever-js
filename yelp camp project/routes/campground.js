@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router({mergeParams:true});
-
+const {isLogged} = require('../middleware');
 const handleAsync = require('../utils/handleAsync');
 const AppError = require('../utils/AppError');
 const joi = require('joi');
@@ -26,7 +26,7 @@ router.get('/', handleAsync(async(req,res)=>{
     res.render('campground/index',{camp});
 }))
 
-router.get('/new' , (req,res)=>{
+router.get('/new' , isLogged,(req,res)=>{
     res.render('campground/new');
 })
 
@@ -44,7 +44,7 @@ router.get('/:id' ,handleAsync(async(req,res)=>{
     
 }))
 
-router.post('/' , schema ,handleAsync(async(req,res)=>{
+router.post('/' , schema ,isLogged,handleAsync(async(req,res)=>{
     
     const Campground = new campground(req.body.campground);
     await Campground.save();
@@ -52,21 +52,21 @@ router.post('/' , schema ,handleAsync(async(req,res)=>{
     res.redirect(`/campground/${Campground.id}`);
 }))
 
-router.get('/:id/edit',handleAsync(async (req,res)=>{
+router.get('/:id/edit',isLogged,handleAsync(async (req,res)=>{
     const {id} = req.params;
     const camp = await campground.findById(id);
     req.flash('success','Successfully edited the campground');
     res.render('campground/edit' ,{camp});
 }))
 
-router.put('/:id',schema ,handleAsync(async(req,res)=>{
+router.put('/:id',schema,isLogged ,handleAsync(async(req,res)=>{
     const {id} = req.params;
     
     await campground.findByIdAndUpdate(id,{...req.body.campground});
     res.redirect(`/campground`);
 }))
 
-router.delete('/:id' , handleAsync(async(req,res)=>{
+router.delete('/:id' ,isLogged, handleAsync(async(req,res)=>{
     const {id} = req.params;
     await campground.findByIdAndDelete(id);
     req.flash('success','Successfully deleted the campground');
