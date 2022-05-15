@@ -27,15 +27,18 @@
         </ul>
       </div>
       <div class="navbar-nav">
+        <% if(!currentuser) { %> 
         <li class="nav-item">
           <a class="nav-link " aria-current="page" href="/login">login</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/register">register</a>
         </li>
+        <% } else { %> 
         <li class="nav-item">
           <a class="nav-link" href="/logout">logout</a>
         </li>
+        <% } %> 
       </div>
     </div>
   </nav>
