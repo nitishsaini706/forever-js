@@ -7,6 +7,7 @@ const joi = require('joi');
 const {campSchema } = require('../schema/camp');
 const campground = require('../model/campground');
 const flash = require('flash');
+const { authorize } = require('passport/lib');
 
 
 // joi isused fo server side validation in js not db
@@ -33,8 +34,8 @@ router.get('/new' , isLogged,(req,res)=>{
 
 router.get('/:id' ,handleAsync(async(req,res)=>{
     const {id} = req.params;
-    const camp = await campground.findById(id).populate('reviews');
-
+    const camp = await campground.findById(id).populate('reviews').populate('author');
+    // console.log(camp.author)
     if(!camp){
         req.flash('error','Campground not present');
         return res.redirect('/campground');
@@ -47,7 +48,10 @@ router.get('/:id' ,handleAsync(async(req,res)=>{
 
 router.post('/' , schema ,isLogged,handleAsync(async(req,res)=>{
     
+    // const user = req.session.user_id;
     const Campground = new campground(req.body.campground);
+    Campground.author = req.user._id;
+    // await author.save();
     await Campground.save();
     req.flash( 'success' , 'successfully created campground');
     res.redirect(`/campground/${Campground.id}`);

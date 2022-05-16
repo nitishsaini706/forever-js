@@ -9,6 +9,10 @@ const campgroundSchema = new Schema({
     image:String,
     price:Number,
     description:String,
+    author: {
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'user'
+    },
     reviews : [
         {
             type:mongoose.Schema.Types.ObjectId,
