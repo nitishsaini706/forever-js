@@ -7,6 +7,7 @@ const joi = require('joi');
 const {reviewSchema} = require('../schema/camp');
 const campground = require('../model/campground');
 const Review = require('../model/review');
+const { isLogged,isReviewAuthor } = require('../middleware');
 
 
 const reviewValidation = (req,res,next) =>{
@@ -22,17 +23,18 @@ const reviewValidation = (req,res,next) =>{
 }
 
 
-router.post('/', handleAsync(async(req,res)=>{
+router.post('/', isLogged,handleAsync(async(req,res)=>{
     const camp = await campground.findById(req.params.id);
     const review = new Review(req.body.review);
     camp.reviews.push(review);
+    review.author = req.user.id;
     await review.save();
     await camp.save();
     req.flash('success','Created a review');
     res.redirect(`/campground/${camp.id}`)
 }))
 
-router.delete('/:reviewId' , handleAsync(async (req,res)=>{
+router.delete('/:reviewId' , isLogged,isReviewAuthor,handleAsync(async (req,res)=>{
     const {id , reviewId} = req.params;
     await campground.findByIdAndUpdate(id,{$pull : {$in : req.params.reviewId}});
     await Review.findByIdAndDelete(reviewId);

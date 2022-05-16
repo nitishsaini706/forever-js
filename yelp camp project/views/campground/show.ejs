@@ -1,11 +1,13 @@
-
-<% layout('./layout/boilerplate') -%>
-
-<%- include('../partials/flash') %> 
+<% layout('./layout/boilerplate') -%> <%- include('../partials/flash') %>
 <div class="row">
-  <div class="col-6 ">
+  <div class="col-6">
     <div class="card mt-3 mb-3" style="width: 30vw">
-      <img src="<%= camp.image %> " class="card-img-top" style="height:50vh" alt="..." />
+      <img
+        src="<%= camp.image %> "
+        class="card-img-top"
+        style="height: 50vh"
+        alt="..."
+      />
       <div class="card-body">
         <h5 class="card-title"><%= camp.title %></h5>
         <p class="card-text">Descriprtion - <%= camp.description %></p>
@@ -13,6 +15,7 @@
         <p class="card-text">Submitted By - <%= camp.author.username %></p>
 
         <p class="card-text">Price - <%= camp.price %></p>
+        <% if(currentUser && currentUser.id === camp.author.id){ %>
         <form
           class="d-inline"
           action="/campground/<%= camp._id %>?_method=DELETE "
@@ -24,11 +27,13 @@
           <button class="btn btn-danger">Delete</button>
         </form>
 
+        <% } %>
         <a class="btn btn-info" href="/campground">Go back to index</a>
       </div>
     </div>
   </div>
   <div class="col-6">
+    <% if(currentUser){ %>
     <h2>Leave a Review</h2>
     <div class="card mt-3 mb-3" style="width: 30vw">
       <form
@@ -68,12 +73,19 @@
       <% for(let review of camp.reviews){ %>
       <div class="mb-3 p-3">
         <p>Rating : <%= review.rating %></p>
+        <h6 class="card-subtitle mb-2 text-muted">By <%= review.author.usernamers %> </h6>
         <p>Review : <%= review.body %></p>
-        <form action="/campground/<%= camp.id %>/review/<%= review.id %>?_method=DELETE  " method="POST">
+        <% if(currentUser && (currentUser.id).equals(review.author)) { %>
+          <form
+          action="/campground/<%= camp.id %>/review/<%= review.id %>?_method=DELETE  "
+          method="POST"
+        >
           <button class="btn btn-sm btn-danger">Delete</button>
         </form>
+          <% } %>  
       </div>
       <% } %>
     </div>
+    <% } %>
   </div>
 </div>
