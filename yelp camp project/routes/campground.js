@@ -2,16 +2,13 @@ const express = require('express');
 const router = express.Router({mergeParams:true});
 const {isLogged,isAuthor,schema} = require('../middleware');
 const handleAsync = require('../utils/handleAsync');
-const campground = require('../model/campground');
+const campground = require('../controllers/campground');
 const flash = require('flash');
 const { authorize } = require('passport/lib');
 
 
 
-router.get('/', handleAsync(async(req,res)=>{
-    const camp =  await campground.find({});
-    res.render('campground/index',{camp});
-}))
+router.get('/', handleAsync(campground.index))
 
 router.get('/new' , isLogged,(req,res)=>{
     res.render('campground/new');
