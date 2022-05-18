@@ -1,7 +1,3 @@
-if(process.end.NODE_ENV !== 'production')
-{
-    require('dotenv').config();
-}
 
 const campground = require('../model/campground');
 

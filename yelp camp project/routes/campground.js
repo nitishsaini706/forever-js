@@ -5,14 +5,16 @@ const handleAsync = require('../utils/handleAsync');
 const campground = require('../controllers/campground');
 const flash = require('flash');
 const { authorize } = require('passport/lib');
-
+const multer  = require('multer')
+const storage = require('../cloudnary/index')
+const upload = multer(storage)
 
 
 router.get('/', handleAsync(campground.index))
 
-router.get('/new' , isLogged, campground.newRender);
+router.get('/new' , upload.single('image'),isLogged, campground.newRender);
 
-router.get('/:id' ,handleAsync(campgrond.edit))
+router.get('/:id' ,handleAsync(campground.edit))
 
 router.post('/' , schema ,isAuthor,isLogged,handleAsync(campground.create))
 
