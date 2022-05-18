@@ -10,39 +10,11 @@ const { authorize } = require('passport/lib');
 
 router.get('/', handleAsync(campground.index))
 
-router.get('/new' , isLogged,(req,res)=>{
-    res.render('campground/new');
-})
+router.get('/new' , isLogged, campground.newRender);
 
-router.get('/:id' ,handleAsync(async(req,res)=>{
-    const {id} = req.params;
-    const camp = await campground.findById(id).populate(
-        {path:'reviews',
-        populate: {
-            path:'author'
-        }
-    }).populate('author');
-    // console.log(camp.author)
-    if(!camp){
-        req.flash('error','Campground not present');
-        return res.redirect('/campground');
-    }
-    
+router.get('/:id' ,handleAsync(campgrond.edit))
 
-        res.render('campground/show',{camp});
-    
-}))
-
-router.post('/' , schema ,isAuthor,isLogged,handleAsync(async(req,res)=>{
-    
-    // const user = req.session.user_id;
-    const Campground = new campground(req.body.campground);
-    Campground.author = req.user._id;
-    // await author.save();
-    await Campground.save();
-    req.flash( 'success' , 'successfully created campground');
-    res.redirect(`/campground/${Campground.id}`);
-}))
+router.post('/' , schema ,isAuthor,isLogged,handleAsync(campground.create))
 
 router.get('/:id/edit',isLogged,isAuthor,handleAsync(async (req,res)=>{
     const {id} = req.params;
