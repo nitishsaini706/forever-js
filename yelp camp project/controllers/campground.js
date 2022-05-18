@@ -1,3 +1,8 @@
+if(process.end.NODE_ENV !== 'production')
+{
+    require('dotenv').config();
+}
+
 const campground = require('../model/campground');
 
 module.exports.index = async (req, res) => {
