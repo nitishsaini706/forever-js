@@ -6,7 +6,10 @@ const Review = require('./review')
 const campgroundSchema = new Schema({
     location:String,
     title:String,
-    image:String,
+    images:[{
+        url:String,
+        filename:String
+    }],
     price:Number,
     description:String,
     author: {

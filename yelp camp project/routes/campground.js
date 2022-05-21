@@ -12,22 +12,19 @@ const upload = multer(storage)
 
 router.get('/', handleAsync(campground.index))
 
-router.get('/new' , upload.single('image'),isLogged, campground.newRender);
+router.get('/new' ,isLogged,upload.array('image') ,campground.newRender);
 
 router.get('/:id' ,handleAsync(campground.edit))
 
-router.post('/' , schema ,isAuthor,isLogged,handleAsync(campground.create))
+router.post('/' , schema ,isAuthor,isLogged,upload.array('image'),handleAsync(campground.create))
 
-router.get('/:id/edit',isLogged,isAuthor,handleAsync(async (req,res)=>{
-    const {id} = req.params;
-    const camp = await campground.findById(id);
-    req.flash('success','Successfully edited the campground');
-    res.render('campground/edit' ,{camp});
-}))
+router.get('/:id/edit',isLogged,isAuthor,handleAsync(campground.editForm))
 
-router.put('/:id',schema,isLogged ,isAuthor,handleAsync(async(req,res)=>{
+router.put('/:id',schema,isLogged ,isAuthor ,handleAsync(async(req,res)=>{
     const {id} = req.params;
-    
+    const img = req.files.map(f => ({url:f.url,filename:f.filename}));
+    campground.images.push(...img);
+    await campground.save();
     await campground.findByIdAndUpdate(id,{...req.body.campground});
     res.redirect(`/campground`);
 }))
