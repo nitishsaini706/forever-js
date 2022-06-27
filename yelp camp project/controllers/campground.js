@@ -1,5 +1,8 @@
 
 const campground = require('../model/campground');
+const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
+const mapBoxToken = process.env.MAP_TOKEN;
+mbxGeocoding({accessTOekn : mapBoxToken});
 
 
 module.exports.index = async (req, res) => {
