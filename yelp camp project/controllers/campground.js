@@ -2,7 +2,9 @@
 const campground = require('../model/campground');
 const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
 const mapBoxToken = process.env.MAP_TOKEN;
-mbxGeocoding({accessTOekn : mapBoxToken});
+
+// this contains 2 methods forward and reverse geocode
+const geocoding = mbxGeocoding({accessToken : mapBoxToken});
 
 
 module.exports.index = async (req, res) => {
@@ -46,11 +48,18 @@ module.exports.editForm = async (req,res)=>{
 module.exports.create = async(req,res)=>{
     
     // const user = req.session.user_id;
-    const Campground = new campground(req.body.campground);
-    const images = req.files.map(f => ({url:f.url,filename:f.filename}));
-    Campground.author = req.user._id;
-    // await author.save();
-    await Campground.save();
-    req.flash( 'success' , 'successfully created campground');
-    res.redirect(`/campground/${Campground.id}`);
+
+    const geodata = await geocoding.forwardGeocode({
+        query:' Amritsar , India',
+        limit:1
+    }).send()
+    console.log(geodata);
+
+    // const Campground = new campground(req.body.campground);
+    // const images = req.files.map(f => ({url:f.url,filename:f.filename}));
+    // Campground.author = req.user._id;
+    // // await author.save();
+    // await Campground.save();
+    // req.flash( 'success' , 'successfully created campground');
+    // res.redirect(`/campground/${Campground.id}`);
 }
