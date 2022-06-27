@@ -114,6 +114,10 @@ zoom: 9 // starting zoom
 });
 new mapboxgl.Marker()
 .setLngLat(camp.geometry.coordinates)
+
+new mapboxgl.PopUp({offset:25})
+.setLngLat(camp.geometry.coordinates)
+.setHtml(`<h1>${camp.location}</h1>`)
 .addTo(map);
 
 </script>
