@@ -53,13 +53,14 @@ module.exports.create = async(req,res)=>{
         query:' Amritsar , India',
         limit:1
     }).send()
-    console.log(geodata);
+    
 
-    // const Campground = new campground(req.body.campground);
-    // const images = req.files.map(f => ({url:f.url,filename:f.filename}));
-    // Campground.author = req.user._id;
-    // // await author.save();
-    // await Campground.save();
-    // req.flash( 'success' , 'successfully created campground');
-    // res.redirect(`/campground/${Campground.id}`);
+    const Campground = new campground(req.body.campground);
+    campground.location = geodata.body.features[0].geometry;
+    const images = req.files.map(f => ({url:f.url,filename:f.filename}));
+    Campground.author = req.user._id;
+    // await author.save();
+    await Campground.save();
+    req.flash( 'success' , 'successfully created campground');
+    res.redirect(`/campground/${Campground.id}`);
 }

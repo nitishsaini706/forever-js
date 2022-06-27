@@ -1,9 +1,12 @@
 <% layout('./layout/boilerplate') -%>
 <link rel="stylesheet" href="/stylesheets/stars.css">
 
+
 <div class="row">
     <div class="col-6">
+        <div id="map" style="height: 300px; width: 200px;"></div>
         <div class="card mb-3">
+            
             <div id="campgroundCarousel" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
                     <% camp.images.forEach((img, i) => {  %>
@@ -94,3 +97,24 @@
         <% } %>
     </div>
 </div>
+
+<script>
+    const camp = `<% JSON.stringify(campground) -%>`
+</script>
+ <!-- we can plave this srcipt is another folder in public js file but we need to store access token in another variable and use that variable -->
+<script>
+    
+
+	mapboxgl.accessToken = 'pk.eyJ1Ijoibml0aXNoc2FpbmkiLCJhIjoiY2wzZnRuMGd3MHNubDNpb2YyM3dvcHptZyJ9.aZc1dBnbam1Jk1E2WDbB-w';
+const map = new mapboxgl.Map({
+container: 'map', // container ID
+style: 'mapbox://styles/mapbox/streets-v11', // style URL
+center: camp.geometry.coordinates, // starting position [lng, lat]
+zoom: 9 // starting zoom
+});
+new mapboxgl.Marker()
+.setLngLat(camp.geometry.coordinates)
+.addTo(map);
+
+</script>
+
